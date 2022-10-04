@@ -1,0 +1,241 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.0 (Debian 14.0-1.pgdg110+1)
+-- Dumped by pg_dump version 14.0 (Debian 14.0-1.pgdg110+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: goods; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.goods (
+    id integer NOT NULL,
+    name text,
+    color text,
+    price_per_item integer,
+    amount integer
+);
+
+
+ALTER TABLE public.goods OWNER TO admin;
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.goods_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.goods_id_seq OWNER TO admin;
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.goods_id_seq OWNED BY public.goods.id;
+
+
+--
+-- Name: purchases; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.purchases (
+    user_id integer NOT NULL,
+    goods_id integer NOT NULL,
+    transaction_date timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.purchases OWNER TO admin;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    login character varying(64),
+    name character varying(128),
+    surname character varying(128),
+    email character varying(128)
+);
+
+
+ALTER TABLE public.users OWNER TO admin;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO admin;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: goods id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.goods ALTER COLUMN id SET DEFAULT nextval('public.goods_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: goods; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.goods (id, name, color, price_per_item, amount) FROM stdin;
+1	Telephone	black	17300	31232
+2	Telephone	white	17300	31232
+3	Telephone	orange	17300	31232
+4	Watch	red	1313	124
+5	Watch	black	1221	112
+6	Laptop	white	127100	1123
+7	Laptop	black	127100	1123
+8	Tablet	white	53010	1331
+9	Tablet	black	53010	1451
+10	Monitor	\N	26000	1331
+11	Monitor	\N	18690	1451
+12	TV	\N	22530	14124
+13	Mouse	\N	643	113
+14	Mouse	\N	728	104
+15	Headphones	white	805	1203
+16	Headphones	black	805	1201
+\.
+
+
+--
+-- Data for Name: purchases; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.purchases (user_id, goods_id, transaction_date) FROM stdin;
+1	2	2022-10-04 08:01:55.272755
+1	3	2022-10-04 08:01:56.315627
+2	5	2022-10-04 08:01:58.35575
+3	2	2022-10-04 08:02:03.699711
+4	1	2022-10-04 08:02:06.804051
+8	3	2022-10-04 08:02:14.351613
+3	2	2022-10-04 08:02:27.103569
+3	16	2022-10-04 08:02:28.143808
+5	13	2022-10-04 08:02:36.291648
+5	2	2022-10-04 08:02:39.331787
+3	2	2022-10-04 08:02:44.075546
+4	7	2022-10-04 08:02:45.515583
+3	2	2022-10-04 08:02:48.618803
+2	3	2022-10-04 08:02:51.060064
+4	11	2022-10-04 08:03:00.247187
+1	15	2022-10-04 08:03:01.750315
+5	3	2022-10-04 08:03:12.499884
+6	4	2022-10-04 08:03:15.103749
+8	9	2022-10-04 08:03:29.147649
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users (id, login, name, surname, email) FROM stdin;
+1	i_ivanov	Ivan	Ivanov	i.ivanov@gmail.ru
+2	p_petrov	Petr	Petrov	p.petrov@gmail.ru
+3	k_kirilov	Kirill	Kirillov	\N
+4	a_antonov	Anton	Antonov	a.antonov@gmail.ru
+5	a_ivanova	Ann	Ivanova	a.ivanova@gmail.ru
+6	m_petrova	Maria	Petrova	m.petrova@gmail.ru
+7	p_ivanov	Petr	Ivanov	\N
+8	i_ivanov	Ivan	Ivanov	\N
+9	i_kirillov	Ivan	Kirillov	i.kirillov@gmail.ru
+\.
+
+
+--
+-- Name: goods_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.goods_id_seq', 16, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 9, true);
+
+
+--
+-- Name: goods goods_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.goods
+    ADD CONSTRAINT goods_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: purchases purchases_goods_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.purchases
+    ADD CONSTRAINT purchases_goods_id_fkey FOREIGN KEY (goods_id) REFERENCES public.goods(id);
+
+
+--
+-- Name: purchases purchases_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.purchases
+    ADD CONSTRAINT purchases_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
